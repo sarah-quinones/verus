@@ -116,7 +116,7 @@
 
         verusfmt = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           pname = "verusfmt";
-          version = "0.6.1";
+          version = "0.7.1";
 
           src = pkgs.fetchFromGitHub {
             owner = "verus-lang";
