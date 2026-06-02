@@ -146,6 +146,36 @@
           };
         });
 
+        verus-analyzer = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+          pname = "verus-analyzer";
+          version = "0.0.0";
+
+          src = pkgs.fetchFromGitHub {
+            owner = "verus-lang";
+            repo = "verus-analyzer";
+            rev = "aeee5aae753f5c374f2bddba276395040fe567f9";
+            hash = "sha256-NQ2pGMDUSI1B1TpAFjb+bw8gYjh517F9EnLkMGKzI7M=";
+          };
+
+          cargoHash = "sha256-RA3bgK/I6QGCcLci3CEvpojWIZ0HEE3rls+XOAplZ44=";
+          doCheck = false;
+
+          nativeCheckInputs = [ pkgs.cargo ];
+
+          meta = {
+            homepage = "https://github.com/verus-lang/verus-analyzer";
+            description = " A Verus compiler front-end for IDEs (derived from rust-analyzer)";
+            license = lib.licenses.mit;
+            mainProgram = "verus-analyzer";
+            platforms = [
+              "x86_64-linux"
+              "x86_64-darwin"
+              "aarch64-darwin"
+              "x86_64-windows"
+            ];
+          };
+        });
+
         # --- z3 ---
 
         z3Version = "4.12.5";
@@ -281,7 +311,7 @@
       {
         packages.${system} = rec {
           default = verus;
-          inherit rust-bin rustup vargo verus verusfmt z3 cvc5;
+          inherit rust-bin rustup vargo verus verusfmt verus-analyzer z3 cvc5;
         };
         formatter.${system} = pkgs.writeShellApplication {
           name = "formatter";
@@ -313,6 +343,7 @@
             vargo
             verus
             verusfmt
+            verus-analyzer
             z3
             cvc5
           ];
